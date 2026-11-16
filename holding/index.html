@@ -1389,6 +1389,28 @@ body.desk .ch495sh{grid-template-columns:repeat(10,minmax(0,1fr))}
 .v50up .v50c{display:flex;flex-direction:column;align-items:flex-end;gap:4px;text-align:right}
 .v50up .v50c b{font-size:var(--fs-sm)}
 @media (min-width:980px){.v50up .v50r{padding:var(--sp-2) var(--sp-1)}}
+/* ===================== v50.5: weekly seeded run ===================== */
+.wr505l,.wr505c{border-color:color-mix(in srgb,var(--acc) 45%,var(--line));background:linear-gradient(160deg,color-mix(in srgb,var(--acc) 8%,var(--panel)),var(--panel))}
+.wr505l .w60h b,.wr505c .w60h b{min-width:0;overflow-wrap:anywhere}
+.wr505tws{display:flex;flex-wrap:wrap;align-items:flex-start;align-content:flex-start;gap:6px;margin:var(--sp-1) 0}
+.wr505tw{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:999px;border:1px solid var(--line);background:#0b1020;font-size:var(--fs-xs);max-width:100%;overflow-wrap:anywhere}
+.wr505tw .i{width:14px;height:14px}
+.wr505kv{margin:var(--sp-1) 0}
+.wr505kv b{overflow-wrap:anywhere}
+.wr505a{gap:var(--sp-1);flex-wrap:wrap}
+.wr505a .btn{min-height:44px}
+.wr505pc{font-size:var(--fs-xs);margin-top:var(--sp-1)}
+.wr505bd{display:flex;flex-direction:column;gap:4px;margin:var(--sp-1) 0}
+.wr505br{display:flex;align-items:center;gap:var(--sp-2);padding:6px var(--sp-2);border:1px solid var(--line);border-radius:var(--r-md);background:#0b1020;min-width:0}
+.wr505br.you{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 14%,#0b1020)}
+.wr505rk{flex:none;width:30px;display:inline-flex;justify-content:center;font-weight:800;font-size:var(--fs-sm)}
+.wr505rk .i{width:18px;height:18px}
+.wr505nm{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:var(--fs-sm)}
+.wr505sc{flex:none;font-size:var(--fs-sm)}
+.wr505lg{display:flex;flex-direction:column;gap:2px;font-size:var(--fs-sm)}
+body.desk #mcol>#lgWr,body.desk #mcol>#lgWr+.card,body.desk #mcol>#lgWr+.teaser{column-span:all}
+body.desk #mcol>#lgWr+.card{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);column-gap:var(--sp-3);align-items:start}
+body.desk #mcol>#lgWr+.card>.w60h,body.desk #mcol>#lgWr+.card>p,body.desk #mcol>#lgWr+.card>.wr505pc{grid-column:1/-1}
 </style>
 <!-- SESSION_LOG_INJECT_CSS -->
 <style>
@@ -4727,6 +4749,127 @@ const _migrate50=migrate;migrate=function(o){if(o&&typeof o==='object'){try{v50P
 function v50Norm(){if(!S||typeof S!=='object') return;const d=fresh();for(const k in d){const a=d[k];if(!Array.isArray(a)||a.length!==N||!Array.isArray(S[k])||S[k].length>=N) continue;for(let i=S[k].length;i<N;i++) S[k].push(Array.isArray(a[i])?[]:a[i]);}}
 const _chStart50=chStart495;chStart495=function(id){const r=_chStart50(id);if(r){v50Norm();refreshFlows();}return r;};
 const _chEnd50=chEnd495;chEnd495=function(why){const r=_chEnd50(why);if(r){v50Norm();refreshFlows();}return r;};
+/* ===================== v50.5: Weekly Seeded Run + local personal-best board (model) =====================
+   BACKLOG "v50.5 Weekly Seeded Run + local personal-best board". Fun first, retention second; nothing here is for sale.
+   - One scenario per ISO week, the same for every player: built only from the week number (agHash/agRng, no Game ID),
+     so it works offline and cannot be rerolled. A start (5 kinds), two rule twists (7 kinds), one score and a 20-30 min clock.
+   - It plays on the v49.5 challenge engine as the special id 'weekly' (chDef495 returns this week's scenario): your standard
+     run is saved and comes back untouched, level playing field, the clock only runs while you play. Replays are unlimited.
+   - Board: five computer-set benchmark CEOs per week (seeded names and scores). Their 3rd/2nd/1st place scores are the
+     bronze/silver/gold marks. Your personal bests stay on this device (S.wr): best per week (last 12 weeks), your attempts
+     (last 30) and podium counts. An online board with real players needs a backend and privacy work: later (dropped_ideas).
+   - Unlocks with the first Exit or the IPO (whichever comes first). Weekly marks do not count toward challenge medals.
+   Save fields (optional, older saves load with defaults): S.wr = {runs:[], best:{wk:score}, pod:{wk:tier}, hide:wk, seen:wk}. */
+const WR505_ST=[
+ {id:'shop',ico:'🏪',n:'Main Street',d:'Fresh start: one Corner Shop',ms:['val','inc','units'],set(n){}},
+ {id:'trio',ico:'🤝',n:'Family trio',d:'Three managed companies (Corner Shop, Hopwise, Byteforge) and $5K',ms:['val','eq','riv'],
+  set(n){n.units=wrArr505([60,40,18]);n.mgr=wrArr505([true,true,true],false);n.cash=5000;n.qOn=true;}},
+ {id:'lev',ico:'💳',n:'Borrowed empire',d:'Four managed companies bought with $1M of debt',ms:['eq','val'],
+  set(n){n.units=wrArr505([60,40,20,8]);n.mgr=wrArr505([true,true,true,true],false);n.debt=1e6;n.cash=0;n.qOn=true;}},
+ {id:'pub',ico:'🔔',n:'Fresh listing',d:'Public with four managed companies, sentiment 45',ms:['val','eq'],
+  set(n){n.units=wrArr505([80,50,30,14]);n.mgr=wrArr505([true,true,true,true],false);n.public=true;n.stake=70;n.sent=45;n.cash=2000;n.qOn=true;n.nextRaid=0;}},
+ {id:'fix',ico:'🛟',n:'Fixer-upper',d:'Four companies: Loudspeaker in receivership, Byteforge in distress, morale 45',ms:['val','inc'],
+  set(n){n.units=wrArr505([50,30,15,8]);n.mgr=wrArr505([true,true,false,false],false);n.recv=wrArr505([0,0,0,60]);n.distress=wrArr505([0,0,60,0]);n.morale=Array(N).fill(45);n.cash=500;n.qOn=true;}}];
+const WR505_MODS=[
+ {id:'tax',ico:'🏝',n:'Haven ban',d:'Every tax rate is at least 30%'},
+ {id:'mgr',ico:'👔',n:'Headhunter strike',d:'Managers cost 3× as much'},
+ {id:'credit',ico:'🏦',n:'Tight credit',d:'No new borrowing'},
+ {id:'sharks',ico:'🦈',n:'Hungry rivals',d:'Rivals start 40% stronger'},
+ {id:'mood',ico:'😟',n:'Restless staff',d:'Every morale target is 10 points lower'},
+ {id:'hot',ico:'🔥',n:'Hot sector',d:'HOT earns 50% more all week'},
+ {id:'angel',ico:'💵',n:'Angel cheque',d:'Start with $50K extra cash'}];
+const WR505_T=[1200,1500,1800];
+/* calibration (dev/tri505/pace505.js, the v49.5 engaged bot, 3 seeds per start and per twist; dev/tri505/pace.out):
+   WR505_BASE = the bot's median peak at a 30-min clock; WR505_TF = share of it reached at 20 / 25 min (a one-shop start
+   grows late, the bigger starts plateau early); WR505_MF = measured effect of each twist (the bot shrugs most of them off,
+   a human feels them more). Board: gold (1st) ≈ 0.7× the bot, silver ≈ 0.25×, bronze ≈ 0.05× for money scores. */
+const WR505_BASE={shop:{val:5.2e9,inc:3.2e6,units:470},trio:{val:6.3e9,eq:6.3e9,riv:4},lev:{eq:5.3e9,val:5.3e9},pub:{val:4.2e9,eq:4.2e9},fix:{val:4.9e9,inc:3.4e6}};
+const WR505_TF={shop:{money:{1200:0.12,1500:0.6},units:{1200:0.7,1500:0.93}},big:{money:{1200:0.85,1500:0.97},units:{1200:0.95,1500:0.98},riv:{1200:0.7,1500:0.9}}};
+const WR505_MF={tax:{val:0.95,eq:0.95,inc:0.94},mood:{val:0.9,eq:0.9,inc:0.94},hot:{inc:1.04},angel:{val:1.07,eq:1.07,inc:1.1}};
+const WR505_FR={money:[0.7,0.25,0.05,0.012,0.003],units:[0.95,0.8,0.6,0.4,0.25]};
+const WR505_NAMES=['Avery Lund','Mira Okafor','Dante Reyes','Priya Sethi','Hugo Brandt','Lena Varga','Tomas Weir','Nadia Kovac','Felix Amari','Sana Holt','Owen Pryce','Ines Duarte','Rafael Cho','Greta Fenn','Jonah Strand','Yara Basri'];
+const WR505_CARRY=['wr'];
+let WR505_C={};
+function wrArr505(a,fill){const b=Array(N).fill(fill===undefined?0:fill);a.forEach((v,i)=>{b[i]=v;});return b;}
+function wrNow505(){return wkIdx(today());}
+function wrLabel505(wk){return wkLabel(wk);}
+function wrOpen505(){return !!S&&(fin(S.stats&&S.stats.exits,0)>=1||!!S.public||!!(S.ch&&S.ch.id==='weekly'));}
+function wrOn505(){return !!(S&&S.ch&&S.ch.id==='weekly');}
+function wrSig505(v,m){if(m==='riv'||m==='units') return Math.max(0,Math.round(v));const p=Math.pow(10,Math.floor(Math.log10(Math.max(1,v)))-1);return Math.max(1,Math.round(v/p)*p);}
+/* the week's scenario: pure function of the week number (same for everyone) */
+function wrBuild505(wk){wk=Math.floor(fin(wk,0));if(WR505_C[wk]) return WR505_C[wk];
+ const r=agRng(agHash('holding-weekly-505:'+wk)),pick=a=>a[Math.floor(r()*a.length)%a.length];
+ const st=pick(WR505_ST),m=pick(st.ms),T=pick(WR505_T);
+ const pool=WR505_MODS.filter(x=>!(x.id==='sharks'&&m!=='riv'&&r()<0.5)&&!(x.id==='credit'&&st.id!=='lev'&&st.id!=='fix'&&r()<0.5));
+ const mods=[];while(mods.length<2&&pool.length){const k=Math.floor(r()*pool.length)%pool.length;mods.push(pool.splice(k,1)[0].id);}
+ const hot=Math.floor(r()*3); /* Corner Shop, Hopwise or Byteforge: every start can reach them */
+ const MF=m==='units'||m==='riv'?m:'money',TF=WR505_TF[st.id==='shop'?'shop':'big'][MF];let G=WR505_BASE[st.id][m]*(T<1800&&TF?TF[T]:1);
+ for(const id of mods){const f=WR505_MF[id];if(f&&f[m]) G*=f[m];}
+ const nm=WR505_NAMES.slice();const rv=[];
+ for(let k=0;k<5;k++){const name=nm.splice(Math.floor(r()*nm.length)%nm.length,1)[0];let v;
+  if(m==='riv') v=[Math.max(3,Math.round(G)),Math.max(2,Math.round(G*0.55)),1,0,0][k];
+  else {const fr=m==='units'?WR505_FR.units:WR505_FR.money;v=wrSig505(G*fr[k]*(0.92+0.16*r()),m);}
+  rv.push({n:name,v});}
+ for(let k=1;k<5;k++) if(rv[k].v>=rv[k-1].v&&m!=='riv') rv[k].v=wrSig505(rv[k-1].v*0.8,m);
+ if(m==='riv'&&rv[1].v>=rv[0].v) rv[0].v=rv[1].v+1;
+ const g=[rv[2].v,rv[1].v,rv[0].v];
+ const rules=[st.d].concat(mods.map(id=>{const x=WR505_MODS.find(y=>y.id===id);return x.id==='hot'?x.d.replace('HOT',SUBS[hot].name):x.d;}),[`Score: ${CHM495[m].n.toLowerCase()} · ${Math.round(T/60)} min clock`]);
+ const d={id:'weekly',wk,ico:'🏁',n:'Weekly run · '+wrLabel505(wk),s:'Weekly',T,m,g,st:st.id,mods,hot,rv,emb:'',title:'',
+  story:`This week's seeded scenario is the same for every HOLDING player: ${st.n.toLowerCase()} with ${mods.map(id=>WR505_MODS.find(y=>y.id===id).n.toLowerCase()).join(' and ')}. Beat the benchmark CEOs on the board, then come back and beat yourself.`,
+  rules,set(n){st.set(n);if(mods.includes('angel')) n.cash+=50000;if(mods.includes('sharks')) n.rivals.forEach(v=>{v.str=1.4;});}};
+ WR505_C[wk]=d;return d;}
+function wrDef505(){return wrBuild505(wrOn505()&&S.ch.wk!=null?S.ch.wk:wrNow505());}
+function wrMod505(id){if(!wrOn505()) return false;return wrDef505().mods.includes(id);}
+/* the challenge engine resolves 'weekly' to the scenario of the week it was started in (or this week) */
+const _chDef505=chDef495;chDef495=function(id){if(id==='weekly') return wrDef505();return _chDef505(id);};
+const _chOpen505=chOpen495;
+const _chStart505=chStart495;chStart495=function(id){if(id!=='weekly') return _chStart505(id);if(!wrOpen505()||S.ch) return false;
+ const wk=wrNow505();const sv=chOpen495;chOpen495=()=>true;let r;try{r=_chStart505(id);}finally{chOpen495=sv;}
+ if(r&&S.ch){S.ch.wk=wk;if(!S.wr||typeof S.wr!=='object') S.wr=wrFresh505();S.wr.seen=wk;}return r;};
+/* end: record the attempt on the local board (the challenge log stays for challenges only) */
+const _chEnd505=chEnd495;chEnd495=function(why){const C=S.ch;if(!C||C.id!=='weekly') return _chEnd505(why);
+ const d=wrBuild505(C.wk!=null?C.wk:wrNow505());const best=C.best==null?0:C.best;const r=_chEnd505(why);
+ if(r){if(!S.wr||typeof S.wr!=='object') S.wr=wrFresh505();const W=S.wr;
+  if(Array.isArray(S.chLog)&&S.chLog[0]&&S.chLog[0].id==='weekly') S.chLog.shift();
+  const rank=wrRank505(d,best);const e={wk:d.wk,v:best,rank,med:clamp(r.med|0,0,3),why:r.why,t:r.t,d:r.d};
+  W.runs.unshift(e);W.runs=W.runs.slice(0,30);
+  const pb=W.best[d.wk];e.pb=pb==null||best>pb;if(e.pb) W.best[d.wk]=best;
+  if((e.med|0)>(W.pod[d.wk]|0)) W.pod[d.wk]=e.med;wrTrim505(W);r.wk=d.wk;r.rank=rank;r.pb=e.pb;S.chRes=Object.assign({},S.chRes,{wk:d.wk,rank,pb:e.pb,best});}
+ return r;};
+/* marks: weekly medals are podium places on this week's board, not challenge medals */
+const _chAward505=chAward495;chAward495=function(d,tier){if(!d||d.id!=='weekly') return _chAward505(d,tier);const md=MED495[tier],rv=d.rv[3-tier];
+ ui('toast',`${md.ico} You passed ${rv?rv.n:'a benchmark'}: #${4-tier} on the ${wrLabel505(d.wk)} board!`,'big');ui('sfx','big');};
+const _chStep505=chStep495;chStep495=function(){if(!wrOn505()) return _chStep505();const k=S.chBest&&S.chBest.weekly;_chStep505();if(S.chBest){if(k==null) delete S.chBest.weekly;else S.chBest.weekly=k;}};
+function wrRank505(d,v){return 1+d.rv.filter(x=>x.v>v).length;}
+function wrBest505(wk){const W=S.wr;const b=W&&W.best?W.best[wk]:null;return b==null?null:b;}
+function wrBoard505(wk){const d=wrBuild505(wk),b=wrBest505(wk),rows=d.rv.map(x=>({n:x.n,v:x.v,you:false}));
+ if(b!=null) rows.push({n:'You',v:b,you:true});rows.sort((a,c)=>c.v-a.v||(a.you?-1:c.you?1:0));return rows.map((x,i)=>Object.assign(x,{rank:i+1}));}
+function wrDaysLeft505(){return wkDaysLeft(today());}
+function wrPlayed505(wk){const W=S.wr;return !!W&&W.runs.some(e=>e.wk===wk);}
+function wrPodCount505(){const o={b:0,s:0,g:0};const P=(S.wr&&S.wr.pod)||{};for(const k in P){const m=P[k]|0;if(m===1) o.b++;else if(m===2) o.s++;else if(m>=3) o.g++;}return o;} /* weeks by best podium */
+/* rule twists */
+const _taxRate505=taxRate;taxRate=function(i){const r=_taxRate505(i);return wrMod505('tax')?Math.max(0.3,r):r;};
+const _mgrCost505=mgrCost;mgrCost=function(i){return _mgrCost505(i)*(wrMod505('mgr')?3:1);};
+const _canBorrow505=canBorrow;canBorrow=function(){return wrMod505('credit')?false:_canBorrow505();};
+const _moraleTarget505=moraleTarget;moraleTarget=function(i,f){const t=_moraleTarget505(i,f);return wrMod505('mood')?clamp(t-10,5,100):t;};
+const _payM505=payM;payM=function(i){const m=_payM505(i);return wrMod505('hot')&&i===wrDef505().hot?m*1.5:m;};
+/* ---- save ---- */
+function wrFresh505(){return {runs:[],best:{},pod:{},hide:-1,seen:-1};}
+function wrTrim505(W){const ks=Object.keys(W.best).map(Number).sort((a,b)=>b-a);for(const k of ks.slice(12)) delete W.best[k];
+ const kp=Object.keys(W.pod).map(Number).sort((a,b)=>b-a);for(const k of kp.slice(52)) delete W.pod[k];}
+function wrFix505(w){const o=wrFresh505();if(!w||typeof w!=='object'||Array.isArray(w)) return o;
+ const wk=x=>{const v=Math.floor(Number(x));return isFinite(v)&&v>=0&&v<1e6?v:null;};
+ o.runs=(Array.isArray(w.runs)?w.runs:[]).filter(e=>e&&typeof e==='object'&&wk(e.wk)!=null).slice(0,30).map(e=>({wk:wk(e.wk),v:clamp(fin(e.v,0),-MAXV,MAXV),rank:clamp(Math.floor(fin(e.rank,6)),1,6),med:clamp(Math.floor(fin(e.med,0)),0,3),why:['time','done','quit'].includes(e.why)?e.why:'quit',t:clamp(Math.round(fin(e.t,0)),0,1e7),d:fin(e.d,0),pb:!!e.pb}));
+ if(w.best&&typeof w.best==='object') for(const k in w.best){const K=wk(k),v=w.best[k];if(K!=null&&typeof v==='number'&&isFinite(v)) o.best[K]=clamp(v,-MAXV,MAXV);}
+ if(w.pod&&typeof w.pod==='object') for(const k in w.pod){const K=wk(k),v=Math.floor(fin(w.pod[k],0));if(K!=null&&v>=1) o.pod[K]=clamp(v,1,3);}
+ o.hide=wk(w.hide)==null?-1:wk(w.hide);o.seen=wk(w.seen)==null?-1:wk(w.seen);wrTrim505(o);return o;}
+CH495_CARRY.push(...WR505_CARRY);
+const _fresh505=fresh;fresh=function(){const o=_fresh505();o.wr=wrFresh505();return o;};
+const _migrate505=migrate;migrate=function(o){const src=o&&typeof o==='object'?o:{};const out=_migrate505(o);out.wr=wrFix505(src.wr);
+ if(out.ch&&out.ch.id==='weekly'){const wk=Math.floor(fin(src.ch&&src.ch.wk,-1));out.ch.wk=wk>=0?wk:wrNow505();}return out;};
+const _chFix505=chFix495;chFix495=function(c){const r=_chFix505(c);if(r&&r.id==='weekly'){const wk=Math.floor(fin(c.wk,-1));r.wk=wk>=0&&wk<1e6?wk:wrNow505();}return r;};
+const _chResFix505=chResFix495;chResFix495=function(r){const o=_chResFix505(r);if(o&&o.id==='weekly'){const wk=Math.floor(fin(r.wk,-1));o.wk=wk>=0&&wk<1e6?wk:wrNow505();o.rank=clamp(Math.floor(fin(r.rank,6)),1,6);o.pb=!!r.pb;}return o;};
+const _doExit505=doExit;doExit=function(){const keep=S.wr;const r=_doExit505.apply(this,arguments);if(r!==false&&keep) S.wr=keep;return r;};
 /* ---------------- FORMAT ---------------- */
 const SUF=['','K','M','B','T','Qa','Qi','Sx','Sp','Oc','No','Dc','UDc','DDc','TDc','QaDc','QiDc','SxDc','SpDc','OcDc','NoDc','Vg'];
 function fmt(n){
@@ -8071,6 +8214,100 @@ GLOSS.push(['sectors50','New sectors',`After ${SUBS[V50_FIRST-1].name} three mor
  ['abil50','New sector abilities',v50AbTxt().replace(/<\/?b>/g,'')]);
 const v50_init0=init;init=function(){v50_init0();
  Object.assign(window.HOLDING,{V50_AB,V50_FIRST,V50_SCRUB,v50New,v50Rival,v50Links,v50Coming,v50UpHTML,v50RowHTML,v50Newest,map9,mapVis,nodePos,mapHTML,cycT,ability,ACH,LINKS,RIVALS,RIV_GROUP,CRISIS_EV,TAX_EV,EVENTS,UPN,CH485,T48_TOP,GLOSS,migrate,tabSubs,foundCard,share,rivalFor,setPrice,calcFlows,R,potRate,taxRate,nextSub,mgrCost,rivalsHTML,UPG,GOALS,SUBS,checkAch,acct,refreshFlows,buffM,prod,own,buyStake,bandDev,auditRate,v50Pad,v50PadQ,qcoFix,qtFix,qcoRows,v50Norm});};
+/* ===================== v50.5: Weekly Seeded Run (UI) =====================
+   Legacy: 🏁 Weekly run section (#lgWr, before Challenges): this week's start, twists, score, clock, days left, your best + rank,
+   Play (brief window) and Board (local personal-best board). HQ: a once-a-week nudge card (#hqWr, Play / Later) while this
+   week's run is unplayed. During the run the v49.5 challenge card, header chip and goal bar show it with board places.
+   After: result card + window with your place, personal best and the board. Help topics, a first-time mini-tour, glossary. */
+function wrTwists505(d){return d.mods.map(id=>{const x=WR505_MODS.find(y=>y.id===id);return `<span class="wr505tw">${x.ico} ${x.n}</span>`;}).join('');}
+function wrStartOf505(d){return WR505_ST.find(x=>x.id===d.st);}
+function wrScoreTxt505(d,v){return CHM495[d.m].fmt(v);}
+function wrLegacyHTML505(){
+ let h=`<h2 id="lgWr">🏁 Weekly run<span class="sp"></span><button class="lnk idq" data-a="gloss505:weekly" aria-label="Weekly run help">?</button></h2>`;
+ if(!wrOpen505()) return h+`<div class="teaser">🏁 A new seeded scenario every week, the same for every player, with a local personal-best board. Unlocks with your IPO or your first Exit.</div>`;
+ const wk=wrNow505(),d=wrBuild505(wk),st=wrStartOf505(d),b=wrBest505(wk),dl=wrDaysLeft505(),on=wrOn505();
+ const rk=b!=null?wrRank505(d,b):0,pc=wrPodCount505();
+ h+=`<div class="card wr505l"><div class="w60h">${st.ico} <b>${wrLabel505(wk)}: ${st.n}</b><span class="sp"></span><span class="muted nw">${dl} day${dl===1?'':'s'} left</span></div>
+ <div class="wr505tws">${wrTwists505(d)}</div>
+ <div class="kv num wr505kv"><span class="t">Score</span><b>${CHM495[d.m].sh}</b><span class="t">Clock</span><b>${Math.round(d.T/60)} min</b><span class="t">Your best</span><b>${b!=null?wrScoreTxt505(d,b)+' · #'+rk+' of 6':'not played yet'}</b></div>
+ ${on?`<p class="muted">Your weekly run is on: the HQ card shows the clock and your place.</p>`:`<p class="muted">Same scenario for every player this week. Your standard run is saved while you play and comes back exactly as it was.</p>`}
+ <div class="row wr505a"><button type="button" class="btn ${on||S.ch?'sec':'good'} grow" data-a="wr505i"${S.ch&&!on?' disabled':''}>${on?'Details':S.ch?'Finish your challenge first':b!=null?'🏁 Play again':'🏁 Play this week'}</button><button type="button" class="btn sec grow" data-a="wr505b" id="wr505bb">📊 Board</button></div>
+ <div class="wr505pc muted">Podium weeks: ${MED495[3].ico} ${pc.g} · ${MED495[2].ico} ${pc.s} · ${MED495[1].ico} ${pc.b}</div></div>`;
+ return h;}
+function wrBoardRows505(wk){const d=wrBuild505(wk);return `<div class="wr505bd" role="table" aria-label="${wrLabel505(wk)} board">${wrBoard505(wk).map(x=>`<div class="wr505br${x.you?' you':''}" role="row"><span class="wr505rk" role="cell">${x.rank<=3?MED495[4-x.rank].ico:'#'+x.rank}</span><span class="wr505nm" role="cell">${x.you?'<b>You</b>':esc(x.n)}</span><b class="wr505sc num" role="cell">${wrScoreTxt505(d,x.v)}</b></div>`).join('')}</div>`;}
+function wrBrief505(){if(!wrOpen505()){toast('🏁 The weekly run unlocks with your IPO or your first Exit.');return;}
+ if(wrOn505()){chInfo495();return;}
+ const wk=wrNow505(),d=wrBuild505(wk),busy=!!S.ch;
+ modal(`<h3>🏁 ${wrLabel505(wk)} seeded run</h3><p>${esc(d.story)}</p><div class="dech">Rules</div><ul class="ch495ru">${d.rules.map(r=>`<li>${esc(r)}</li>`).join('')}</ul>
+ <div class="dech">Board · ${CHM495[d.m].n}</div>${wrBoardRows505(wk)}
+ <p class="muted">Pass 3rd, 2nd and 1st place for a bronze, silver or gold podium this week. Level playing field (no perks, stars or bonuses); the clock only runs while you play; replay as often as you like. Your standard run is saved and comes back exactly as you left it.</p>
+ <div class="row" style="margin-top:8px"><button type="button" class="btn good grow" data-a="ch495go:weekly"${busy?' disabled':''}>${busy?'Finish your current challenge first':'🏁 Start weekly run'}</button><button type="button" class="btn sec grow" data-a="mclose">Not now</button></div>`);}
+function wrBoardModal505(){if(!wrOpen505()){toast('🏁 The weekly run unlocks with your IPO or your first Exit.');return;}
+ const wk=wrOn505()&&S.ch.wk!=null?S.ch.wk:wrNow505(),d=wrBuild505(wk),W=S.wr||wrFresh505();
+ const mine=W.runs.filter(e=>e.wk===wk).slice().sort((a,c)=>c.v-a.v).slice(0,5);
+ const past=Object.keys(W.best).map(Number).filter(k=>k!==wk).sort((a,c)=>c-a).slice(0,6);
+ modal(`<h3>📊 ${wrLabel505(wk)} board</h3><p class="muted">${CHM495[d.m].n} · ${wrStartOf505(d).n} · ${d.mods.map(id=>WR505_MODS.find(y=>y.id===id).n).join(' + ')}</p>${wrBoardRows505(wk)}
+ <div class="dech">Your attempts this week</div>${mine.length?`<div class="wr505lg">${mine.map((e,i)=>`<div class="muted">${i+1}. ${wrScoreTxt505(d,e.v)} · #${e.rank}${e.med?' '+MED495[e.med].ico:''} · ${e.why==='time'?'clock ran out':'ended early'}</div>`).join('')}</div>`:`<p class="muted">No attempts yet. Your best score lands on the board.</p>`}
+ <div class="dech">Past weeks</div>${past.length?`<div class="wr505lg">${past.map(k=>{const dd=wrBuild505(k),v=W.best[k],m=W.pod[k]|0;return `<div class="muted">${wrLabel505(k)} · ${wrScoreTxt505(dd,v)} · #${wrRank505(dd,v)}${m?' '+MED495[m].ico:''}</div>`;}).join('')}</div>`:`<p class="muted">Your best from each past week shows here (last 12 weeks).</p>`}
+ <p class="muted">The five CEOs are computer-set benchmarks for this week's scenario. Your scores stay on this device. An online board with real players comes later.</p>
+ <div class="row" style="margin-top:8px">${!S.ch&&wk===wrNow505()?`<button type="button" class="btn good grow" data-a="wr505i">🏁 Play</button>`:''}<button type="button" class="btn sec grow" data-a="mclose">Close</button></div>`);}
+/* HQ nudge: once a week, until played or dismissed */
+function wrNudgeOn505(){if(!wrOpen505()||S.ch||S.chRes) return false;const wk=wrNow505(),W=S.wr;return !(W&&(W.hide===wk||wrPlayed505(wk)));}
+function wrHQHTML505(){if(!wrNudgeOn505()) return '';const wk=wrNow505(),d=wrBuild505(wk),st=wrStartOf505(d),dl=wrDaysLeft505();
+ return `<div id="hqWr" class="card wr505c"><div class="w60h">🏁 <b>${wrLabel505(wk)} seeded run is live</b><span class="sp"></span><button class="lnk idq" data-a="gloss505:weekly" aria-label="Weekly run help">?</button></div>
+ <p class="muted">${st.ico} ${st.n} with ${d.mods.map(id=>WR505_MODS.find(y=>y.id===id).n.toLowerCase()).join(' and ')}. Same scenario for every player, ${Math.round(d.T/60)} min clock, ${dl} day${dl===1?'':'s'} left. Your run waits safely.</p>
+ <div class="row wr505a"><button type="button" class="btn good grow" data-a="wr505i">🏁 See this week</button><button type="button" class="btn sec" data-a="wr505h">Later</button></div></div>`;}
+/* during the run: challenge card with weekly wording, Board instead of medals talk */
+const _chHQ505=chHQHTML495;chHQHTML495=function(){const h=_chHQ505();if(!wrOn505()||!h) return h;
+ return h.replace('<b>Challenge: ','<b>').replace('data-a="gloss495:challenge" aria-label="Challenge help"','data-a="gloss505:weekly" aria-label="Weekly run help"').replace('data-a="ch495i">Details</button>','data-a="wr505b">📊 Board</button>').replace('data-a="ch495x">End challenge</button>','data-a="ch495x">End run</button>');};
+const _chInfo505=chInfo495;chInfo495=function(){if(!wrOn505()) return _chInfo505();const C=S.ch,d=wrDef505(),M=CHM495[d.m],v=C.best==null?0:C.best;
+ modal(`<h3>🏁 ${esc(d.n)}</h3><p class="muted">${esc(d.story)}</p><ul class="ch495ru">${d.rules.map(r=>`<li>${esc(r)}</li>`).join('')}</ul>
+ <div class="card kv num ch495kv"><span class="t">Clock left</span><b>${mmss495(chLeft495())}</b><span class="t">Best score</span><b>${M.fmt(v)} · #${wrRank505(d,v)} of 6</b></div>${wrBoardRows505(d.wk)}
+ <div class="row" style="margin-top:8px"><button type="button" class="btn sec grow" data-a="ch495x">End run</button><button type="button" class="btn grow" data-a="mclose">Keep playing</button></div>`);};
+const _chQuit505=chQuit495;chQuit495=function(){if(!wrOn505()) return _chQuit505();const d=wrDef505(),v=S.ch.best==null?0:S.ch.best;
+ confirmBox('End this weekly run?',`Your score ${CHM495[d.m].fmt(v)} (#${wrRank505(d,v)}) goes on your board. Your standard run comes back exactly as you left it.`,'End run',()=>{if(chEnd495('quit')){render(true);chResModal495();}});};
+const _chBrief505=chBrief495;chBrief495=function(id){if(id==='weekly'){wrBrief505();return;}return _chBrief505(id);};
+const _chResHTML505=chResHTML495;chResHTML495=function(){const r=S.chRes;if(!r||r.id!=='weekly'||S.ch) return _chResHTML505();const d=wrBuild505(r.wk!=null?r.wk:wrNow505());
+ return `<div id="hqChRes" class="card wr505c"><div class="w60h">🏁 <b>Weekly run result</b><span class="sp"></span><button class="lnk idq" data-a="gloss505:board" aria-label="Board help">?</button></div>
+ <p class="ch495hl">#${r.rank||wrRank505(d,r.best||0)} on the ${wrLabel505(d.wk)} board · ${wrScoreTxt505(d,r.best||0)}${r.pb?' · new personal best':''}</p><p class="muted">Your standard run is back exactly as you left it.</p>
+ <div class="row ch495a"><button type="button" class="btn good grow" data-a="ch495r">See result</button><button type="button" class="btn sec" data-a="ch495ok">OK</button></div></div>`;};
+const _chResModal505=chResModal495;chResModal495=function(){const r=S.chRes;if(!r||r.id!=='weekly') return _chResModal505();const d=wrBuild505(r.wk!=null?r.wk:wrNow505()),v=r.best||0,rk=r.rank||wrRank505(d,v),md=MED495[r.med|0];
+ const why=r.why==='time'?'The clock ran out.':'You ended the run.';
+ modal(`<div class="ch495res"><div class="ch495big">${md?md.ico:'🏁'}</div><h3>#${rk} on the ${wrLabel505(d.wk)} board</h3><p class="muted">${why} Score ${wrScoreTxt505(d,v)}${r.pb?' · new personal best!':''}</p></div>
+ ${wrBoardRows505(d.wk)}<p class="muted">Your standard run is back exactly as you left it.${d.wk===wrNow505()?' Replay as often as you like until Sunday.':''}</p>
+ <div class="row" style="margin-top:8px">${d.wk===wrNow505()?`<button type="button" class="btn sec grow" data-a="wr505again">Play again</button>`:''}<button type="button" class="btn good grow" data-a="ch495ok">Back to my run</button></div>`);};
+/* goal bar: next board place */
+const _gHead505=gHead;gHead=function(){_gHead505();if(!wrOn505()) return;const C=S.ch,d=wrDef505(),M=CHM495[d.m],k=C.med|0,v=C.best==null?0:C.best,gt=$('#gTxt');if(!gt) return;setT($('#gCh'),'WEEKLY');
+ setT(gt,k>=3?`#1 on the ${wrLabel505(d.wk)} board! Best ${M.fmt(v)}`:`Pass ${d.rv[2-k].n} for #${3-k}: ${M.sh.toLowerCase()} ${M.fmt(d.g[k])} (best ${M.fmt(v)})`);};
+/* Legacy + HQ placement */
+const _tabLegacy505=TABS.legacy;TABS.legacy=function(){let h=_tabLegacy505();const sec=wrLegacyHTML505();
+ if(wrOn505()) h=h.replace(/<div class="alert info" id="lgChOn">[\s\S]*?<\/div><\/div>/,`<div class="alert info" id="lgChOn"><span>🏁</span><div class="grow">You are playing the <b>weekly run</b>. Exit, perks and stars wait for your standard run, which is saved.</div></div>`);
+ const a=h.indexOf('<h2 id="lgCh">');h=a>=0?h.slice(0,a)+sec+h.slice(a):h+sec;return h;};
+const _tabHQ505=tabHQ;tabHQ=function(){let h=_tabHQ505();const top=wrHQHTML505();
+ if(top){let k=h.indexOf('<div id="hqIdle"');if(k<0) k=h.indexOf('<div id="hqCrit">');if(k<0) k=h.indexOf('<h2');if(k<0) k=h.length;h=h.slice(0,k)+top+h.slice(k);}return h;};
+TABS.hq=tabHQ;
+const _hqSig505=hqSig;hqSig=function(){return _hqSig505()+'.wr'+(wrNudgeOn505()?wrNow505():'-')+(S.chRes&&S.chRes.id==='weekly'?'r':'');};
+const _tabSig505=tabSig;tabSig=function(){const W=S.wr||{};return _tabSig505()+'|wr:'+wrNow505()+(wrOpen505()?1:0)+(W.runs?W.runs.length:0)+(W.hide|0)+JSON.stringify(W.best||{}).length+(S.ch&&S.ch.id==='weekly'?'on':'');};
+const _exitHint505=exitHint;exitHint=function(){return wrOn505()?'Exit is off during the weekly run. End it to return to your run.':_exitHint505();};
+/* ---- actions ---- */
+const V505_ACT={
+ wr505i(){if(modalOpen) closeModal();wrBrief505();},wr505b(){if(modalOpen) closeModal();wrBoardModal505();},
+ wr505h(){if(!S.wr) S.wr=wrFresh505();S.wr.hide=wrNow505();toast('🏁 Later it is. The weekly run waits in Legacy until Sunday.');render(true);},
+ wr505again(){if(modalOpen) closeModal();S.chRes=null;render(true);wrBrief505();},
+ gloss505(k){glossary(k);}};
+['wr505i','wr505b','wr505h','wr505again','gloss505'].forEach(k=>PZ_OK.add(k));
+/* ---- help: topics, mini-tours, glossary ---- */
+T48_TOP.hq.splice(1,0,{id:'wrq',t:'🏁 Weekly run',sel:()=>q48('#hqWr'),b:()=>{const d=wrBuild505(wrNow505());return `This week's seeded scenario: the same start and twists for every player. Score: ${CHM495[d.m].sh.toLowerCase()}. Play it from here or Legacy; Later hides this card until next week.`;}});
+T48_TOP.legacy.splice(1,0,{id:'wr',t:'🏁 Weekly run',sel:()=>q48('#lgWr'),b:()=>wrOpen505()?`A new scenario every Monday, the same for every player. Beat the five benchmark CEOs on the board for a podium. Your best ${wrBest505(wrNow505())!=null?'this week is #'+wrRank505(wrBuild505(wrNow505()),wrBest505(wrNow505())):'is not set yet this week'}.`:'The weekly run unlocks with your IPO or your first Exit.'});
+M48.push({id:'wr',t:'Weekly run',steps:[
+ {t:'🏁 A new run every week',sel:()=>wrOpen505()?q48('#lgWr'):null,b:()=>`Every Monday a seeded scenario appears: one start, two rule twists, one score and a short clock. Everyone gets the same one, so it is a fair race.`},
+ {t:'📊 Your board',sel:()=>q48('#wr505bb'),b:()=>`Five benchmark CEOs set the marks: pass 3rd, 2nd and 1st for a bronze, silver or gold podium. Your bests stay on this device.`}]},
+ {id:'wrq',t:'Weekly run on HQ',steps:[{t:'🏁 This week\'s run is live',sel:()=>q48('#hqWr'),b:()=>`Tap See this week for the rules and the board. Your standard run is saved while you play. Later hides this until next week.`}]});
+GLOSS.push(['weekly','Weekly seeded run',`A new scenario every Monday (unlocks with your IPO or first Exit), seeded only by the week so every player gets the same one: a start (${WR505_ST.map(s=>s.n).join(', ')}), two rule twists (${WR505_MODS.map(m=>m.n).join(', ')}), one score and a 20-30 minute clock that runs only while you play. Your standard run is saved and comes back exactly as it was. Replay as often as you like.`],
+ ['board','Weekly board',`Each week's board lists five computer-set benchmark CEOs and your best score. Passing 3rd, 2nd and 1st place gives a bronze, silver or gold podium for that week. Your bests are kept on this device (last 12 weeks); an online board with real players comes later. Nothing is for sale.`]);
+const v505_init0=init;init=function(){Object.assign(ACT,V505_ACT);v505_init0();
+ Object.assign(window.HOLDING,{WR505_ST,WR505_MODS,WR505_BASE,wrBuild505,wrDef505,wrNow505,wrOpen505,wrOn505,wrMod505,wrRank505,wrBest505,wrBoard505,wrFresh505,wrFix505,wrPodCount505,wrNudgeOn505,
+  wrLegacyHTML505,wrHQHTML505,wrBrief505,wrBoardModal505,wrLabel505,wrCache505:()=>WR505_C,wkIdx,mgrCost,taxRate,canBorrow,moraleTarget,payM,migrate,fresh,doExit,chFix495,chResFix495});};
 /* ---------------- STORE ----------------
  Entitlements come ONLY from the platform receipt record (PLAT_KEY, written by the store layer / native wrapper).
  S.owned is just a cache of it. In this web build the store runs in PREVIEW mode: nothing can be bought.
@@ -8438,11 +8675,12 @@ window.HOLDING={P485,p485Apply,sat485,tierAt485,ucAt485,unitCost,maxAfford,MAXU,
  ctGen,ctVal,ctBest,ctAccept,ctBreak,ctActive,ctLockK,ctPending,ctStep,ctFix,ctOn,CT:{CT_LEN,CT_SQ,CT_AUD,CT_SENT,CT_BRK},
  checkWeek,wkGen,wkIdx,wkDaysLeft,wkLabel,wkEvent,wkSettle,wkRescale,wkReward,wkProg,wkText,wkUnlockOK,wkFix,wkLeft,tpBest,tpFinder,agPace,agTpHint,dayNum,
 };
-/* ===== SESSION_LOG_INJECT begin (v50 hosted copy; not written back to live holding.html) ===== */
+/* ===== SESSION_LOG_INJECT begin (v50.5 hosted copy; not written back to live holding.html) ===== */
 /* Build switch for the live session logger (testing). Set SESSION_LOG_BUILD to false, or drop src/c37_slogflag.js, src/d49_sesslog.js,
    src/d50_sesslog_holding.js and src/a38_sesslog.css from build.sh, to strip it from store builds. */
 const SESSION_LOG_BUILD=true;
 const SESSION_LOG_CHANNEL='bc-holding-2950d4f5e7cb';
+const HOLDING_VER='v50.5';
 
 /* ===================== Live session observation logger: shared core =====================
    Zero-setup streaming: a baked-in default channel (override with ?channel=[A-Za-z0-9_-]{8,64}).
@@ -8621,7 +8859,7 @@ if(SESSION_LOG_BUILD){
     else if(v==='cl'){SLOG.copyLog().then(ok=>toast(ok?'📋 Session log copied':'Copy failed: use Download session log'));}if(curTab==='legacy') render(true);};
    const def=(typeof SESSION_LOG_CHANNEL==='string'&&SESSION_LOG_CHANNEL)?SESSION_LOG_CHANNEL:'';
    const SL=(typeof BCSessionLog!=='undefined'&&BCSessionLog)||(typeof SessionLog!=='undefined'&&SessionLog&&SessionLog.create&&SessionLog)||(window.BCSessionLog||window.SessionLog);
-   SLOG=SL.create({app:'holding',version:'v50',channel:SL.channelFromUrl()||def,injectCss:false,screen:()=>curTab+(modalOpen?'*':''),state:slogState,scrub:slogScrub,
+   SLOG=SL.create({app:'holding',version:(typeof HOLDING_VER==='string'&&HOLDING_VER)||'v50.5',channel:SL.channelFromUrl()||def,injectCss:false,screen:()=>curTab+(modalOpen?'*':''),state:slogState,scrub:slogScrub,
     allowed:()=>!(S&&S.set&&S.set.privacy&&S.set.privacy.age==='minor'),
     onChange:()=>{if(curTab==='legacy') try{render(true);}catch(e){}},
     label:t=>{const a=t.dataset&&t.dataset.a;if(a){const x=t.getAttribute('aria-label')||t.textContent||'';return '['+a.slice(0,32)+'] '+x;}return null;}});
