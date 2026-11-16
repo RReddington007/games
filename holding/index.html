@@ -1336,6 +1336,52 @@ body.desk #mcol>#lgPerks,body.desk #mcol>#lgPerks+p,body.desk #mcol>#lgTree{colu
 .hof49 b{overflow-wrap:anywhere;font-weight:600}
 .ltr49f .btn,.rm49c .btn,.rm49s,#mbox .rm49c .btn{min-height:44px}
 #lgLtr button.ltr49sw{min-height:44px;display:inline-flex;align-items:center;padding:0 6px;font-size:var(--fs-sm)}
+/* ===================== v49.5: challenge runs ===================== */
+body.th-medal{--bg:#100b07;--panel:#1c140d;--card:#261b11;--line:#4d3820;--acc:#f0a35e}
+.ch495l .ch495s{margin:var(--sp-1) 0;font-weight:700}
+.ch495g{display:grid;grid-template-columns:1fr;gap:var(--sp-1);margin-top:var(--sp-1)}
+.ch495r{display:flex;align-items:center;gap:var(--sp-2);padding:6px var(--sp-2);border:1px solid var(--line);border-radius:var(--r-md);background:#0b1020;min-width:0}
+.ch495i{flex:none;display:inline-flex;width:28px;justify-content:center}
+.ch495i .i{width:22px;height:22px}
+.ch495t{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:1px}
+.ch495t b{font-size:var(--fs-sm);overflow-wrap:anywhere}
+.ch495t .muted{font-size:var(--fs-xs);overflow-wrap:anywhere}
+.ch495md{flex:none;display:inline-flex;gap:1px}
+.ch495k{opacity:.25;filter:grayscale(1)}
+.ch495k.on{opacity:1;filter:none}
+.ch495k .i{width:16px;height:16px}
+.ch495r .btn{flex:none;min-height:44px;min-width:64px}
+.ch495c{border-color:color-mix(in srgb,#fbbf24 50%,var(--line));background:linear-gradient(160deg,color-mix(in srgb,#fbbf24 8%,var(--panel)),var(--panel))}
+.ch495c .w60h b{min-width:0;overflow-wrap:anywhere}
+.ch495kv{margin:var(--sp-1) 0}
+.ch495kv b{overflow-wrap:anywhere}
+.ch495bar{position:relative;margin:14px 0 4px;padding-top:2px}
+.ch495bar .meter{height:10px}
+.ch495mk{position:absolute;top:-13px;transform:translateX(-50%);line-height:1}
+.ch495mk .i{width:15px;height:15px}
+.ch495gl{font-size:var(--fs-xs);margin:2px 0 4px;overflow-wrap:anywhere}
+.ch495ru{margin:4px 0 6px;padding-left:18px;font-size:var(--fs-sm)}
+.ch495ru li{margin:2px 0;overflow-wrap:anywhere}
+.ch495a{gap:var(--sp-1);flex-wrap:wrap}
+.ch495a .btn,.ch495rm,.ch495w .btn{min-height:44px}
+.ch495rm{width:100%;margin-top:var(--sp-2)}
+.ch495hl{font-weight:800;font-size:var(--fs-md);margin:var(--sp-1) 0 2px;overflow-wrap:anywhere}
+.ch495now{margin-bottom:var(--sp-1)}
+.ch495res{text-align:center}
+.ch495big .i{width:56px;height:56px}
+.ch495sh{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-bottom:var(--sp-1)}
+.ch495tr{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;border-radius:var(--r-md);border:1px solid var(--line);background:#0b1020;opacity:.55;min-width:0}
+.ch495tr.m1,.ch495tr.m2,.ch495tr.m3{opacity:1}
+.ch495tr.m3{border-color:color-mix(in srgb,#fbbf24 60%,var(--line))}
+.ch495ti .i{width:22px;height:22px}
+.ch495tn{font-size:var(--fs-xs);color:var(--dim);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ch495w{flex-wrap:wrap;gap:6px}
+.ch495lg{display:flex;flex-direction:column;gap:2px;font-size:var(--fs-sm)}
+.hch495{border-color:color-mix(in srgb,#fbbf24 55%,var(--line));background:color-mix(in srgb,#fbbf24 14%,#0b1020)}
+body.desk #mcol>#lgCh,body.desk #mcol>#lgCh+.card,body.desk #mcol>#lgMed,body.desk #mcol>#lgMed+.card{column-span:all}
+body.desk #mcol>#lgCh+.card .ch495g{grid-template-columns:repeat(2,minmax(0,1fr))}
+body.desk #mbox .ch495g{grid-template-columns:1fr}
+body.desk .ch495sh{grid-template-columns:repeat(10,minmax(0,1fr))}
 </style>
 <!-- SESSION_LOG_INJECT_CSS -->
 <style>
@@ -4464,6 +4510,150 @@ const _doExit49=doExit;doExit=function(){const hof=hofFix49(S.cpHof),cp=cpFix49(
  return r;};
 let v49Err=0;
 const _slow49=slow;slow=function(d){_slow49(d);try{if(S.qOn&&!S.lq0) S.lq0=lqSnap49();cpStep49(d);rmStep49();}catch(e){if(!v49Err){v49Err=1;console.warn('v49',e);}}};
+/* ===================== v49.5: Challenge runs (model) =====================
+   BACKLOG "v49+ Challenge runs (extends run modifiers)". Fun first, retention second; nothing here is for sale.
+   Ten hand-built scenarios, each with a story, its own rules, a clock (active play time; it pauses while you are away
+   or paused) and one scored goal with bronze / silver / gold marks. Unlocked after the first Exit.
+   - Starting a challenge saves your standard run exactly as it is (S.chBak) and starts the scenario on a level
+     playing field: no perks, stars, achievement bonus, playbook or rule card. Ending it (clock runs out, the goal is
+     settled, or End challenge) brings the standard run back untouched. You can always fall back to it.
+   - Medals are kept on this device (S.chMed, best tier per challenge) and shown in Legacy (Medal room).
+     Rewards are cosmetic only: silver = a title for your shareholder letters, gold = a wearable emblem,
+     5 golds = the Medal Room HQ theme. No currency, no boosts, no purchase.
+   - While a challenge runs: no Exit, no perk buying, no achievements or starter goals (they belong to the standard
+     run), no shareholder letters, and no offline earnings (the clock is paused anyway).
+   Save fields (all optional, v49 saves load with defaults): S.ch, S.chBak, S.chMed, S.chBest, S.chTitle, S.chLog, S.chRes. */
+const MED495=[null,{n:'Bronze',ico:'🥉',c:'#d97706'},{n:'Silver',ico:'🥈',c:'#cbd5e1'},{n:'Gold',ico:'🥇',c:'#fbbf24'}];
+const CHM495={
+ val:{n:'Peak group value',sh:'Group value',f:()=>holdVal(),fmt:v=>money(v)},
+ eq:{n:'Peak equity (group value − debt)',sh:'Equity',f:()=>holdVal()-S.debt,fmt:v=>(v<0?'−':'')+money(Math.abs(v))},
+ inc:{n:'Peak steady net income',sh:'Net income',f:()=>calmNet(),fmt:v=>money(Math.max(0,v))+'/s'},
+ units:{n:'Most units owned (all companies)',sh:'Units',f:()=>S.units.reduce((a,b)=>a+b,0),fmt:v=>Math.floor(v).toLocaleString('en-US')},
+ shop:{n:'Corner Shop units',sh:'Shop units',f:()=>S.units[0],fmt:v=>Math.floor(v).toLocaleString('en-US')},
+ riv:{n:'Rival companies absorbed',sh:'Rivals absorbed',f:()=>S.rivals.filter(r=>r.done).length,fmt:v=>String(Math.floor(v))},
+ ipo:{n:'Time to ring the IPO bell',sh:'IPO time',time:1,done:()=>!!S.public,fmt:v=>v<0?'not yet':dur(v)}};
+/* g = [bronze, silver, gold]; for time goals the marks are the latest times (lower is better). T = clock in seconds. */
+const CH495=[
+ {id:'bankrupt',ico:'🛟',n:'Bankrupt conglomerate',s:'Bankrupt',T:1500,m:'val',g:[1e8,1e9,5e9],emb:'🛟',title:'Turnaround Artist',
+  story:'Your late uncle left you his conglomerate. Two companies are in receivership, a third is sliding, the bank wants its money and morale is on the floor.',
+  rules:['Starts with 4 companies: Hopwise and Loudspeaker in receivership, Byteforge in distress','$200K of debt at the usual interest, morale 35 everywhere','Only the shop and Hopwise have managers'],
+  set(n){n.units=[40,25,12,6,0,0];n.mgr=[true,true,false,false,false,false];n.recv=[0,60,0,60,0,0];n.distress=[0,0,65,0,0,0];n.morale=[35,35,35,35,80,80];n.debt=2e5;n.cash=300;n.qOn=true;}},
+ {id:'haven',ico:'🏝',n:'Tax-haven ban',s:'Haven ban',T:1800,m:'val',g:[5e6,2e8,1.5e9],emb:'🏝',title:'Straight Shooter',
+  story:'A new treaty closes the Free Port, the Tech Zone and the Offshore desk. Every company pays mainland tax, so internal prices cannot move profit anywhere cheaper.',
+  rules:['Every tax rate is at least 30%','Fresh start: one Corner Shop'],set(n){}},
+ {id:'ousted',ico:'🪑',n:'Ousted from the board',s:'Ousted',T:1800,m:'val',g:[1e8,7e8,3e9],emb:'🪑',title:'The Comeback Chair',
+  story:'You wake up locked out of your own boardroom. Quillmart Group owns the votes, skims the profit and changed the door codes. Win the shareholders back.',
+  rules:['Starts public with 4 companies, ousted (10% proxy support)','The raider skims 35% of group net until you win a special meeting','Shareholder sentiment starts at 35'],
+  set(n){n.units=[80,50,30,14,0,0];n.mgr=[true,true,true,true,false,false];n.public=true;n.stake=70;n.sent=35;n.ousted={support:10,by:'Quillmart Group',since:0,camp:0};n.cash=2000;n.qOn=true;n.nextRaid=0;}},
+ {id:'handson',ico:'👆',n:'Hands-on founder',s:'Hands-on',T:1200,m:'units',g:[120,260,380],emb:'👆',title:'Hands-on Founder',
+  story:'The headhunters are on strike. Managers cost ten times the usual fee, so you run the floor yourself and grow anyway.',
+  rules:['Managers cost 10× as much','Score: most units across all your companies','Fresh start: one Corner Shop'],set(n){}},
+ {id:'lbo',ico:'💳',n:'Leveraged buyout',s:'LBO',T:1500,m:'eq',g:[5e7,5e8,3e9],emb:'💳',title:'Debt Slayer',
+  story:'You bought three companies with borrowed money. The interest clock is running and the bank will not lend another cent.',
+  rules:['Starts with 3 managed companies and $2M of debt at the usual interest','No new borrowing','Score: group value minus debt'],
+  set(n){n.units=[60,40,18,0,0,0];n.mgr=[true,true,true,false,false,false];n.debt=2e6;n.cash=0;n.qOn=true;}},
+ {id:'sharks',ico:'🦈',n:'Shark tank',s:'Sharks',T:2400,m:'riv',g:[1,3,5],emb:'🦈',title:'Apex Predator',
+  story:'Every rival in town has fresh funding and a grudge. Take them over before they take your customers.',
+  rules:['Starts with 3 managed companies','Rivals start 60% stronger','Each failed takeover makes that rival stronger still (bigger stakes and premiums raise your odds)','Score: rival companies absorbed'],
+  set(n){n.units=[60,40,20,0,0,0];n.mgr=[true,true,true,false,false,false];n.cash=5000;n.qOn=true;n.rivals.forEach(r=>{r.str=1.6;});}},
+ {id:'sprint',ico:'🔔',n:'Sprint to the bell',s:'Sprint',T:2700,m:'ipo',g:[2700,2100,1680],emb:'🔔',title:'Bell Ringer',
+  story:'The exchange has a slot for one listing this season. Build from a single shop to an IPO before anyone else gets it.',
+  rules:['Fresh start: one Corner Shop','Score: how fast you take HOLDING public (the challenge ends when the bell rings)'],set(n){}},
+ {id:'morale',ico:'🧘',n:'Morale crisis',s:'Morale',T:1500,m:'inc',g:[2e3,1e5,1e6],emb:'🧘',title:'People Person',
+  story:'A leaked memo has every office in uproar. Staff morale starts low and stays fragile: only healthy margins keep people happy.',
+  rules:['Morale starts at 30 and every company\'s morale target is 20 points lower','Score: peak steady net income','Fresh start: one Corner Shop'],
+  set(n){n.morale=Array(N).fill(30);}},
+ {id:'corner',ico:'🏪',n:'One-shop town',s:'One shop',T:900,m:'shop',g:[75,110,130],emb:'🏪',title:'Shopkeeper Supreme',
+  story:'The town council allows exactly one business: yours. No new companies, so make the Corner Shop legendary.',
+  rules:['You cannot found any other company','Score: Corner Shop units','15 minutes on the clock'],set(n){}},
+ {id:'crash',ico:'🛡',n:'Flash crash',s:'Crash',T:1800,m:'val',g:[1e8,7e8,3e9],emb:'🛡',title:'Steady Hand',
+  story:'The market fell 30% before lunch. Your stock is in free fall, sentiment is gone and a raider is already buying.',
+  rules:['Starts public with 4 companies after a crash: sentiment 10, a raider holds 18%','Stay in control and rebuild the value','Morale 50 everywhere'],
+  set(n){n.units=[80,50,30,14,0,0];n.mgr=[true,true,true,true,false,false];n.public=true;n.stake=70;n.sent=10;n.shock=-0.3;n.subShock=[-0.3,-0.3,-0.3,-0.3,0,0];n.morale=Array(N).fill(50);n.raider={name:'Kestrel Holdings',stake:18,pill:false,showdown:null};n.cash=2000;n.qOn=true;}}];
+const CH495_CARRY=['set','seen','daily','agenda','week','theme','themes','owned','emblem','name','stats','gid','chMed','chBest','chTitle','chLog','chRes'];
+const CH495_GOLD_THEME=5;
+function chDef495(id){return CH495.find(c=>c.id===id)||null;}
+function chOn495(id){return !!(typeof S==='object'&&S&&S.ch&&(id==null||S.ch.id===id));}
+function chOpen495(){return fin(S.stats.exits,0)>=1;}
+function chMedOf495(id){return clamp(Math.floor(fin(S.chMed&&S.chMed[id],0)),0,3);}
+function chGolds495(){return CH495.filter(c=>chMedOf495(c.id)===3).length;}
+function chCount495(){const o={b:0,s:0,g:0};for(const c of CH495){const m=chMedOf495(c.id);if(m>=1) o.b++;if(m>=2) o.s++;if(m>=3) o.g++;}return o;}
+function chTitles495(){return CH495.filter(c=>chMedOf495(c.id)>=2);}
+function chEmbs495(){return CH495.filter(c=>chMedOf495(c.id)>=3).map(c=>c.emb);}
+function chTitleTxt495(){const c=chDef495(S.chTitle);return c&&chMedOf495(c.id)>=2?c.title:'';}
+function chLeft495(){const C=S.ch,d=C&&chDef495(C.id);return d?Math.max(0,d.T-(S.t-C.t0)):0;}
+function chMetric495(id){const d=chDef495(id),M=d&&CHM495[d.m];if(!M) return 0;if(M.time) return S.ch&&S.ch.id===id?S.ch.at:-1;return fin(M.f(),0);}
+function chTier495(d,v){const M=CHM495[d.m];if(M.time) return v<0?0:d.g.filter(x=>v<=x).length;return d.g.filter(x=>v>=x).length;}
+function chBestTxt495(id){const d=chDef495(id),b=S.chBest&&S.chBest[id];if(!d||b==null||!isFinite(b)||(!CHM495[d.m].time&&d.m!=='eq'&&b<=0)) return '';return CHM495[d.m].fmt(b);}
+function chGoalTxt495(d,k){const M=CHM495[d.m];return M.time?`within ${dur(d.g[k])}`:M.fmt(d.g[k]);}
+/* start: snapshot the standard run, build the scenario on a level playing field */
+function chStart495(id){const d=chDef495(id);if(!d||S.ch||!chOpen495()) return false;
+ const bak=JSON.parse(JSON.stringify(S));delete bak.chBak;bak.ch=null;
+ const n=fresh();for(const k of CH495_CARRY) n[k]=S[k];
+ Object.assign(n,{ach:S.ach,tut:99,goalI:S.goalI,gPaid:S.gPaid,cpHof:S.cpHof,ltr:S.ltr,ltrNew:0,pbDone:S.pbDone,perks:{},stars:0,rm:null,rmPick:null,pb:null,pbPick:null,chRes:null});
+ d.set(n);
+ n.ch={id:d.id,t0:n.t,med:0,best:null,at:-1,n0:Date.now()};n.chBak=bak;
+ S=n;refreshFlows();try{agRescale();wkRescale();}catch(e){}
+ const v=chMetric495(d.id);if(!CHM495[d.m].time) S.ch.best=v;
+ ui('toast',`${d.ico} Challenge on: ${d.n}. ${dur(d.T)} on the clock. Your standard run is saved.`,'big');ui('sfx','big');return true;}
+/* end: settle the result and bring the standard run back exactly as it was (meta progress carried over) */
+function chEnd495(why){const C=S.ch;if(!C) return null;const d=chDef495(C.id);
+ const res={id:C.id,med:clamp(C.med|0,0,3),best:C.best,at:C.at,why:['time','done','quit'].includes(why)?why:'quit',t:Math.round(Math.max(0,S.t-C.t0)),d:Date.now()};
+ const cur=S;let R=null;try{R=cur.chBak&&typeof cur.chBak==='object'?migrate(cur.chBak):null;}catch(e){R=null;}
+ if(!R){R=fresh();R.tut=99;}
+ for(const k of CH495_CARRY) R[k]=cur[k];
+ R.ch=null;R.chBak=null;R.chRes=res;R.chLog=[res].concat(Array.isArray(cur.chLog)?cur.chLog:[]).slice(0,10);R.lastSave=Date.now();
+ S=R;refreshFlows();try{agRescale();wkRescale();}catch(e){}
+ const md=MED495[res.med];
+ ui('toast',d?`${md?md.ico+' '+md.n+' medal':'No medal this time'} · ${d.n}. Your standard run is back.`:'Challenge over. Your standard run is back.','big');return res;}
+function chAward495(d,tier){const prev=chMedOf495(d.id);if(!S.chMed||typeof S.chMed!=='object') S.chMed={};
+ const g0=chGolds495();if(tier>prev) S.chMed[d.id]=tier;const md=MED495[tier],bits=[];
+ if(tier>prev){if(tier>=2&&prev<2) bits.push(`title “${d.title}” unlocked`);if(tier>=3&&prev<3) bits.push(`emblem unlocked`);if(g0<CH495_GOLD_THEME&&chGolds495()>=CH495_GOLD_THEME) bits.push('Medal Room theme unlocked');}
+ ui('toast',`${md.ico} ${md.n} medal: ${d.n}!${bits.length?' '+bits.join(' · ').replace(/^./,c=>c.toUpperCase())+'.':tier<=prev?' (you already hold it)':''}`,'big');ui('sfx','big');}
+function chStep495(){const C=S.ch;if(!C) return;const d=chDef495(C.id);if(!d){S.ch=null;return;}
+ const M=CHM495[d.m],el=S.t-C.t0;let tier;
+ if(M.time){if(C.at<0&&M.done()) C.at=Math.round(el);tier=chTier495(d,C.at);}
+ else{const v=fin(M.f(),0);if(C.best==null||v>C.best) C.best=v;tier=chTier495(d,C.best);}
+ if(!S.chBest||typeof S.chBest!=='object') S.chBest={};
+ const b=M.time?C.at:C.best;if(b!=null&&(!M.time||b>=0)){const o=S.chBest[d.id];if(o==null||(M.time?b<o:b>o)) S.chBest[d.id]=b;}
+ if(tier>(C.med|0)){C.med=tier;chAward495(d,tier);}
+ if(M.time&&C.at>=0){chEnd495('done');return;}
+ if(el>=d.T) chEnd495('time');}
+/* ---- rules ---- */
+const _taxRate495=taxRate;taxRate=function(i){const r=_taxRate495(i);return chOn495('haven')?Math.max(0.3,r):r;};
+const _mgrCost495=mgrCost;mgrCost=function(i){return _mgrCost495(i)*(chOn495('handson')?10:1);};
+const _canBorrow495=canBorrow;canBorrow=function(){return chOn495('lbo')?false:_canBorrow495();};
+const _moraleTarget495=moraleTarget;moraleTarget=function(i,f){const t=_moraleTarget495(i,f);return chOn495('morale')?clamp(t-20,5,100):t;};
+const _found495=found;found=function(i){if(chOn495('corner')&&i>0){ui('toast','🏪 One-shop town: no other companies in this challenge.');return false;}return _found495.apply(this,arguments);};
+const _tender495=tender;tender=function(k,prem,forceWin){const r=_tender495.apply(this,arguments);if(r&&!r.win&&chOn495('sharks')){const v=S.rivals[k];v.str=clamp(v.str+0.2,0.3,2.5);}return r;};
+/* level playing field + standard-run-only systems */
+const _achMult495=achMult;achMult=function(){return S&&S.ch?1:_achMult495();};
+const _checkAch495=checkAch;checkAch=function(){if(S&&S.ch) return;_checkAch495();};
+const _checkGoals495=checkGoals;checkGoals=function(){if(S&&S.ch) return;_checkGoals495();};
+const _canExit495=canExit;canExit=function(){return !(S&&S.ch)&&_canExit495();};
+const _buyPerk495=buyPerk;buyPerk=function(id){if(S&&S.ch){ui('toast','🥇 Perks wait for your standard run: end the challenge first.');return false;}return _buyPerk495(id);};
+const _endQuarter495=endQuarter;endQuarter=function(){if(!(S&&S.ch)) return _endQuarter495.apply(this,arguments);const L0=S.ltr,n0=S.ltrNew;const r=_endQuarter495.apply(this,arguments);S.ltr=L0;S.ltrNew=n0;return r;};
+const _ltrBuild495=ltrBuild49;ltrBuild49=function(res,t0){const L=_ltrBuild495(res,t0);const t=chTitleTxt495();if(t) L.sig+=', '+t;return L;};
+/* ---- save ---- */
+function chFix495(c){if(!c||typeof c!=='object'||!chDef495(c.id)) return null;
+ return {id:c.id,t0:fin(c.t0,0),med:clamp(Math.floor(fin(c.med,0)),0,3),best:c.best==null?null:fin(c.best,0),at:Math.round(fin(c.at,-1)),n0:fin(c.n0,0)};}
+function chMedFix495(o){const out={};if(o&&typeof o==='object') for(const c of CH495){const m=Math.floor(fin(o[c.id],0));if(m>=1) out[c.id]=clamp(m,1,3);}return out;}
+function chBestFix495(o){const out={};if(o&&typeof o==='object') for(const c of CH495){const v=o[c.id];if(typeof v==='number'&&isFinite(v)&&(!CHM495[c.m].time||v>=0)) out[c.id]=clamp(v,-MAXV,MAXV);}return out;}
+function chResFix495(r){if(!r||typeof r!=='object'||!chDef495(r.id)) return null;return {id:r.id,med:clamp(Math.floor(fin(r.med,0)),0,3),best:r.best==null?null:fin(r.best,0),at:Math.round(fin(r.at,-1)),why:['time','done','quit'].includes(r.why)?r.why:'quit',t:clamp(Math.round(fin(r.t,0)),0,1e7),d:fin(r.d,0)};}
+const _fresh495=fresh;fresh=function(){const o=_fresh495();o.ch=null;o.chBak=null;o.chMed={};o.chBest={};o.chTitle='';o.chLog=[];o.chRes=null;return o;};
+const _migrate495=migrate;migrate=function(o){const out=_migrate495(o);const src=o&&typeof o==='object'?o:{};
+ out.chMed=chMedFix495(src.chMed);out.chBest=chBestFix495(src.chBest);
+ out.chTitle=typeof src.chTitle==='string'&&chDef495(src.chTitle)&&(out.chMed[src.chTitle]|0)>=2?src.chTitle:'';
+ out.chLog=(Array.isArray(src.chLog)?src.chLog:[]).map(chResFix495).filter(Boolean).slice(0,10);out.chRes=chResFix495(src.chRes);
+ out.ch=chFix495(src.ch);
+ const b=src.chBak;out.chBak=out.ch&&b&&typeof b==='object'&&!Array.isArray(b)&&Array.isArray(b.units)?b:null;
+ if(out.chBak){delete out.chBak.chBak;out.chBak.ch=null;}
+ if(out.ch&&!out.chBak) out.ch=null; /* a challenge without its saved run cannot be undone: it simply becomes the run */
+ return out;};
+const _doExit495=doExit;doExit=function(){const keep={chMed:S.chMed,chBest:S.chBest,chTitle:S.chTitle,chLog:S.chLog};const r=_doExit495.apply(this,arguments);
+ if(r!==false) Object.assign(S,keep,{ch:null,chBak:null,chRes:null});return r;};
+let v495Err=0;
+const _slow495=slow;slow=function(d){_slow495(d);try{chStep495();}catch(e){if(!v495Err){v495Err=1;console.warn('v49.5',e);}}};
 /* ---------------- FORMAT ---------------- */
 const SUF=['','K','M','B','T','Qa','Qi','Sx','Sp','Oc','No','Dc','UDc','DDc','TDc','QaDc','QiDc','SxDc','SpDc','OcDc','NoDc','Vg'];
 function fmt(n){
@@ -7621,6 +7811,143 @@ const v49_init0=init;init=function(){Object.assign(ACT,V49_ACT);v49_init0();
  Object.assign(window.HOLDING,{CP49_T,CP49_MAX,RM49,cpDef49,cpOf49,cpHas49,cpProg49,cpEarn49,cpStep49,cpFix49,hofFix49,hofLine49,cpStripHTML49,cpModal49,rsMult49,crMult49,
   rmDef49,rmOn49,rmOffer49,rmChoose49,rmStep49,rmPickHTML49,rmPickModal49,rmInfo49,rmChip49,ltrBuild49,ltrFix49,ltrGet49,ltrSkip49,ltrCardHTML49,ltrModal49,ltrPNG49,ltrShare49,ltrArchiveHTML49,lqSnap49,
   taxRate,pmove,acct,share,spend,rescue,inject,castVote,btEnd,endQuarter,foundCost,unitCost,bulkCost,maxAfford,voteChance,auditRate,mgrCost,payM,pbBtPrize,pbPxPrize,btPrize,pxPrize,margin,slow,migrate,fresh,doExit});};
+/* ===================== v49.5: Challenge runs (UI) =====================
+   Legacy: 🥇 Challenges list (#lgCh, after the Exit card) with medals and Play; the Medal room (#lgMed, right after the
+   Hall of fame) with the trophy shelf, titles, emblems, the Medal Room theme and recent results.
+   Exit flow: the Exit-complete window and the HQ rule-card picker offer "Try a challenge" (the new run waits).
+   During a challenge: HQ card #hqCh (clock, score vs medal marks, rules, End), header chip #hCh495, Legacy banner.
+   After: HQ result card #hqChRes + result window. Every piece has a Help topic, a first-time mini-tour and a glossary entry. */
+const mmss495=s=>{s=Math.max(0,Math.floor(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');};
+function chMedRow495(id){const m=chMedOf495(id);return `<span class="ch495md" aria-label="${m?MED495[m].n+' medal':'No medal yet'}">${[1,2,3].map(k=>`<span class="ch495k${m>=k?' on':''}">${MED495[k].ico}</span>`).join('')}</span>`;}
+function chRowsHTML495(){const busy=!!S.ch;return CH495.map(d=>{const b=chBestTxt495(d.id);
+ return `<div class="ch495r"><span class="ch495i">${d.ico}</span><div class="ch495t"><b>${d.n}</b><span class="muted">${CHM495[d.m].sh} · ${dur(d.T)} clock${b?` · best ${b}`:''}</span></div>${chMedRow495(d.id)}<button type="button" class="btn ${busy?'sec':'good'}" data-a="ch495b:${d.id}" aria-label="${d.n}: details and start"${busy?' disabled':''}>Play</button></div>`;}).join('');}
+function chLegacyHTML495(){
+ let h=`<h2 id="lgCh">🥇 Challenges<span class="sp"></span><button class="lnk idq" data-a="gloss495:challenge" aria-label="Challenges help">?</button></h2>`;
+ if(!chOpen495()) return h+`<div class="teaser">🥇 Ten hand-built scenarios with bronze, silver and gold medals unlock after your first Exit. Your standard run always stays safe.</div>`;
+ const c=chCount495();
+ h+=`<div class="card ch495l">`+(S.ch?chNowHTML495('lg'):`<p class="muted">Each challenge is a short, self-contained scenario with its own rules and clock. Your standard run is saved and comes back exactly as you left it. Medals and cosmetic rewards only, never for sale.</p>`)+
+  `<div class="ch495s muted">${MED495[1].ico} ${c.b} · ${MED495[2].ico} ${c.s} · ${MED495[3].ico} ${c.g} of ${CH495.length}</div><div class="ch495g">${chRowsHTML495()}</div></div>`;
+ return h;}
+function chNowHTML495(where){const C=S.ch,d=C&&chDef495(C.id);if(!d) return '';const M=CHM495[d.m],md=MED495[C.med|0];
+ return `<div class="ch495now"><div class="w60h">${d.ico} <b>Challenge: ${d.n}</b></div><p class="muted">${md?md.ico+' '+md.n+' so far · ':''}<span data-u="txt|ch495t"></span> · score <b data-u="txt|ch495v"></b>. Perks, stars, Exit and achievements wait for your standard run.</p>
+ <div class="row ch495a"><button type="button" class="btn sec grow" data-a="ch495i">Details</button><button type="button" class="btn sec grow" data-a="ch495x">End challenge</button></div></div>`;}
+/* score meter with the three medal marks (log scale for money goals) */
+function chFrac495(d,v){const M=CHM495[d.m],g=d.g;if(M.time){if(v<0) return 0;return clamp(1-v/d.T,0,1);}
+ if(d.m==='val'||d.m==='eq'||d.m==='inc'){const lo=Math.log10(Math.max(1,g[0]/30)),hi=Math.log10(g[2]*1.15);return clamp((Math.log10(Math.max(1,v))-lo)/(hi-lo),0,1);}
+ return clamp(v/(g[2]*1.15),0,1);}
+function chMarks495(d){return d.g.map((x,k)=>`<span class="ch495mk" style="left:${(chFrac495(d,x)*100).toFixed(1)}%" title="${MED495[k+1].n}: ${chGoalTxt495(d,k)}">${MED495[k+1].ico}</span>`).join('');}
+function chHQHTML495(){const C=S.ch,d=C&&chDef495(C.id);if(!d) return '';const M=CHM495[d.m];
+ return `<div id="hqCh" class="card ch495c"><div class="w60h">${d.ico} <b>Challenge: ${d.n}</b><span class="sp"></span><button class="lnk idq" data-a="gloss495:challenge" aria-label="Challenge help">?</button></div>
+ <div class="kv num ch495kv"><span class="t">Clock</span><b data-u="txt|ch495t"></b><span class="t">${M.time?'Bell rung at':'Best score'} · ${M.sh}</span><b data-u="txt|ch495v"></b></div>
+ <div class="ch495bar"><div class="meter"><i data-u="wid|ch495" style="background:var(--acc)"></i></div>${chMarks495(d)}</div>
+ <div class="ch495gl muted">${[0,1,2].map(k=>`${MED495[k+1].ico} ${chGoalTxt495(d,k)}`).join(' · ')}</div>
+ <ul class="ch495ru">${d.rules.map(r=>`<li>${esc(r)}</li>`).join('')}</ul>
+ <div class="row ch495a"><button type="button" class="btn sec grow" data-a="ch495i">Details</button><button type="button" class="btn sec grow" data-a="ch495x">End challenge</button></div></div>`;}
+function chResHTML495(){const r=S.chRes,d=r&&chDef495(r.id);if(!d||S.ch) return '';const md=MED495[r.med];
+ return `<div id="hqChRes" class="card ch495c"><div class="w60h">🥇 <b>Challenge result</b><span class="sp"></span><button class="lnk idq" data-a="gloss495:medals" aria-label="Medals help">?</button></div>
+ <p class="ch495hl">${md?md.ico+' '+md.n:'No medal'} · ${d.ico} ${d.n}</p><p class="muted">Your standard run is back exactly as you left it.</p>
+ <div class="row ch495a"><button type="button" class="btn good grow" data-a="ch495r">See result</button><button type="button" class="btn sec" data-a="ch495ok">OK</button></div></div>`;}
+function chRewardsTxt495(d){return `🥈 Silver: the title “${d.title}” for your shareholder letters · 🥇 Gold: the ${d.emb} emblem by your company name. ${CH495_GOLD_THEME} golds open the Medal Room theme.`;}
+function chBrief495(id){const d=chDef495(id);if(!d) return;if(!chOpen495()){toast('🥇 Challenges unlock after your first Exit.');return;}
+ const b=chBestTxt495(d.id),busy=!!S.ch;
+ modal(`<h3>${d.ico} ${d.n}</h3><p>${esc(d.story)}</p><div class="dech">Rules</div><ul class="ch495ru">${d.rules.map(r=>`<li>${esc(r)}</li>`).join('')}</ul>
+ <div class="dech">Medals · ${CHM495[d.m].n} · ${dur(d.T)} clock</div><div class="card kv num ch495kv">${[0,1,2].map(k=>`<span class="t">${MED495[k+1].ico} ${MED495[k+1].n}</span><b>${chGoalTxt495(d,k)}</b>`).join('')}<span class="t">Your best</span><b>${b||'not played yet'} ${chMedRow495(d.id)}</b></div>
+ <p class="muted">${chRewardsTxt495(d)} Cosmetic only.</p>
+ <p class="muted">Your standard run is saved and comes back exactly as you left it when the challenge ends. Level playing field: no perks, stars or bonuses. The clock only runs while you play.</p>
+ <div class="row" style="margin-top:8px"><button type="button" class="btn good grow" data-a="ch495go:${d.id}"${busy?' disabled':''}>${busy?'Finish your current challenge first':'🥇 Start challenge'}</button><button type="button" class="btn sec grow" data-a="mclose">Not now</button></div>`);}
+function chListModal495(){if(!chOpen495()){toast('🥇 Challenges unlock after your first Exit.');return;}
+ modal(`<h3>🥇 Challenges</h3><p class="muted">Ten hand-built scenarios with bronze, silver and gold medals. Your standard run is saved and waits for you; nothing here is for sale.</p><div class="ch495g">${chRowsHTML495()}</div><button type="button" class="btn sec" style="width:100%;margin-top:6px" data-a="mclose">Back to my run</button>`);}
+function chInfo495(){const C=S.ch,d=C&&chDef495(C.id);if(!d){chListModal495();return;}const M=CHM495[d.m];
+ modal(`<h3>${d.ico} Challenge: ${d.n}</h3><p class="muted">${esc(d.story)}</p><ul class="ch495ru">${d.rules.map(r=>`<li>${esc(r)}</li>`).join('')}</ul>
+ <div class="card kv num ch495kv"><span class="t">Clock left</span><b>${mmss495(chLeft495())}</b><span class="t">${M.time?'Bell rung at':'Best score'}</span><b>${M.time?M.fmt(C.at):M.fmt(C.best==null?0:C.best)}</b>${[0,1,2].map(k=>`<span class="t">${MED495[k+1].ico} ${MED495[k+1].n}</span><b>${chGoalTxt495(d,k)}${(C.med|0)>k?' ✅':''}</b>`).join('')}</div>
+ <p class="muted">${chRewardsTxt495(d)}</p>
+ <div class="row" style="margin-top:8px"><button type="button" class="btn sec grow" data-a="ch495x">End challenge</button><button type="button" class="btn grow" data-a="mclose">Keep playing</button></div>`);}
+function chQuit495(){const C=S.ch,d=C&&chDef495(C.id);if(!d) return;const md=MED495[C.med|0];
+ confirmBox('End this challenge?',`${md?`You keep your ${md.ico} ${md.n} medal.`:'No medal yet: you can try again any time.'} Your standard run comes back exactly as you left it.`,'End challenge',()=>{if(chEnd495('quit')) {render(true);chResModal495();}});}
+function chResModal495(){const r=S.chRes,d=r&&chDef495(r.id);if(!d) return;const M=CHM495[d.m],md=MED495[r.med],held=chMedOf495(d.id);
+ const why=r.why==='time'?'The clock ran out.':r.why==='done'?'You hit the goal.':'You ended the challenge.';
+ const sc=M.time?(r.at>=0?`Bell rung at ${dur(r.at)}`:'The bell did not ring in time'):`Best score ${M.fmt(r.best==null?0:r.best)}`;
+ const unl=[];if(r.med>=2) unl.push(`title “${d.title}”`);if(r.med>=3) unl.push(`${d.emb} emblem`);
+ modal(`<div class="ch495res"><div class="ch495big">${md?md.ico:'🏁'}</div><h3>${md?md.n+' medal':'No medal this time'}</h3><p class="muted">${d.ico} ${d.n} · ${why}</p></div>
+ <div class="card kv num ch495kv"><span class="t">${M.sh}</span><b>${sc}</b>${[0,1,2].map(k=>`<span class="t">${MED495[k+1].ico} ${MED495[k+1].n}</span><b>${chGoalTxt495(d,k)}${r.med>k?' ✅':''}</b>`).join('')}<span class="t">Best ever</span><b>${chBestTxt495(d.id)||'—'} ${chMedRow495(d.id)}</b></div>
+ ${unl.length?`<p>Yours to keep: ${unl.join(' and ')}. Wear ${unl.length>1?'them':'it'} from Legacy · Medal room.</p>`:''}
+ <p class="muted">Your standard run is back exactly as you left it.${held<3?' Try again any time from Legacy.':''}</p>
+ <div class="row" style="margin-top:8px">${held<3?`<button type="button" class="btn sec grow" data-a="ch495b:${d.id}">Try again</button>`:''}<button type="button" class="btn good grow" data-a="ch495ok">Back to my run</button></div>`);}
+/* ---- Medal room (Legacy, after the Hall of fame) ---- */
+function chMedalRoomHTML495(){if(!chOpen495()) return '';const c=chCount495(),T=chTitles495(),E=chEmbs495(),g=chGolds495();
+ let h=`<h2 id="lgMed">🏆 Medal room<span class="sp"></span><span class="muted nw">${MED495[1].ico} ${c.b} · ${MED495[2].ico} ${c.s} · ${MED495[3].ico} ${c.g}</span></h2><div class="card ch495mr">`;
+ h+=`<div class="ch495sh">${CH495.map(d=>{const m=chMedOf495(d.id);return `<div class="ch495tr${m?' m'+m:''}" title="${esc(d.n)}: ${m?MED495[m].n:'no medal yet'}"><span class="ch495ti">${m?MED495[m].ico:d.ico}</span><span class="ch495tn">${d.s}</span></div>`;}).join('')}</div>`;
+ h+=`<div class="dech">Titles (silver)</div>`+(T.length?`<div class="row ch495w"><button type="button" class="btn sec${!S.chTitle?' on':''}" data-a="ch495t:none" aria-pressed="${!S.chTitle}">No title</button>${T.map(d=>`<button type="button" class="btn sec${S.chTitle===d.id?' on':''}" data-a="ch495t:${d.id}" aria-pressed="${S.chTitle===d.id}">${d.title}</button>`).join('')}</div><p class="muted">Your title signs your shareholder letters.</p>`:`<p class="muted">Win a silver medal to earn a title for your shareholder letters.</p>`);
+ h+=`<div class="dech">Emblems (gold)</div>`+(E.length?`<div class="row ch495w">${E.map(e=>`<button type="button" class="btn sec${S.emblem===e?' on':''}" data-a="ch495e:${e}" aria-label="Wear emblem ${e}" aria-pressed="${S.emblem===e}">${e}</button>`).join('')}${S.emblem&&E.includes(S.emblem)?`<button type="button" class="btn sec" data-a="ch495e:none">No emblem</button>`:''}</div>`:`<p class="muted">Each gold medal unlocks an emblem to wear by your company name.</p>`);
+ h+=`<p class="muted">🎨 Medal Room theme: ${g>=CH495_GOLD_THEME?'unlocked (apply it under HQ themes)':`${g} of ${CH495_GOLD_THEME} gold medals`}. Cosmetic only.</p>`;
+ const L=(S.chLog||[]).slice(0,5);if(L.length) h+=`<div class="dech">Recent challenges</div><div class="ch495lg">${L.map(r=>{const d=chDef495(r.id);return d?`<div class="muted">${r.med?MED495[r.med].ico:'·'} ${d.n} · ${r.med?MED495[r.med].n:'no medal'} · ${r.why==='time'?'clock ran out':r.why==='done'?'goal hit':'ended early'}</div>`:'';}).join('')}</div>`;
+ return h+'</div>';}
+const _tabLegacy495=TABS.legacy;TABS.legacy=function(){let h=_tabLegacy495();
+ const a=h.indexOf('<h2 id="lgPerks">');const sec=chLegacyHTML495();h=a>=0?h.slice(0,a)+sec+h.slice(a):h+sec;
+ const mr=chMedalRoomHTML495();if(mr){const f=h.indexOf('<h2 id="lgHof">');let b=f>=0?h.indexOf('<h2',f+5):-1;if(b<0) b=h.length;h=h.slice(0,b)+mr+h.slice(b);}
+ if(S.ch){const d=chDef495(S.ch.id);h=`<div class="alert info" id="lgChOn"><span>🥇</span><div class="grow">You are playing the <b>${d?d.n:''}</b> challenge. Exit, perks and stars wait for your standard run, which is saved.</div></div>`+h;}
+ return h;};
+TABS.legacy=TABS.legacy;
+/* ---- HQ ---- */
+const _tabHQ495=tabHQ;tabHQ=function(){let h=_tabHQ495();const top=chHQHTML495()+chResHTML495();
+ if(top){let k=h.indexOf('<div id="hqIdle"');if(k<0) k=h.indexOf('<div id="hqCrit">');if(k<0) k=h.indexOf('<h2');if(k<0) k=h.length;h=h.slice(0,k)+top+h.slice(k);}return h;};
+TABS.hq=tabHQ;
+const _rmPick495=rmPickHTML49;rmPickHTML49=function(){const h=_rmPick495();if(!h||!chOpen495()||S.ch) return h;
+ return h.replace(/<\/div><\/div>$/,`</div><button type="button" class="btn sec ch495rm" data-a="ch495l">🥇 Or play a challenge (this run waits)</button></div>`);};
+const _hqSig495=hqSig;hqSig=function(){return _hqSig495()+'.ch'+(S.ch?S.ch.id+(S.ch.med|0):'')+(S.chRes?'r':'');};
+const _tabSig495=tabSig;tabSig=function(){return _tabSig495()+'|ch:'+(S.ch?S.ch.id+(S.ch.med|0):'-')+(S.chRes?'r':'')+JSON.stringify(S.chMed||{})+(S.chTitle||'')+(S.emblem||'')+(S.chLog?S.chLog.length:0);};
+const _exitHint495=exitHint;exitHint=function(){return S.ch?'Exit is off during a challenge. End the challenge to return to your run.':_exitHint495();};
+const _offline495=offlineCalc;offlineCalc=function(sec){const o=_offline495(sec);if(S&&S.ch){o.amt=0;o.rate=0;}return o;};
+/* live text */
+Object.assign(TXT,{ch495t:()=>S.ch?mmss495(chLeft495())+' left':'',ch495v:()=>{const C=S.ch,d=C&&chDef495(C.id);if(!d) return '';const M=CHM495[d.m];return M.time?M.fmt(C.at):M.fmt(C.best==null?0:C.best);}});
+Object.assign(WID,{ch495:()=>{const C=S.ch,d=C&&chDef495(C.id);if(!d) return 0;const M=CHM495[d.m];return chFrac495(d,M.time?(C.at>=0?C.at:-1):(C.best||0))*100;}});
+/* header chip */
+function chChip495(){const e=document.getElementById('hCh495');if(!e||!S) return;const C=S.ch,d=C&&chDef495(C.id);const k=d?d.id+(C.med|0)+mmss495(chLeft495()):'';
+ if(e.dataset.k===k) return;e.dataset.k=k;e.hidden=!k;if(!k){e.innerHTML='';return;}const md=MED495[C.med|0];
+ e.innerHTML=emo(`${md?md.ico:d.ico}<span>${mmss495(chLeft495())}</span>`);e.setAttribute('aria-label',`Challenge ${d.n}: ${mmss495(chLeft495())} left. Tap for details`);e.title=`Challenge: ${d.n}`;}
+/* emblems from gold medals survive the store's emblem check */
+function chStoreWrap495(){const f0=Store.fixTheme;if(typeof f0==='function'&&!f0.ch495){Store.fixTheme=function(){const e=S&&S.emblem;const r=f0.apply(this,arguments);if(e&&!S.emblem&&chEmbs495().includes(e)){S.emblem=e;}return r;};Store.fixTheme.ch495=1;}}
+THEMES.push(['th-medal','Medal Room',`Challenges: ${CH495_GOLD_THEME} gold medals`,()=>chGolds495()>=CH495_GOLD_THEME]);
+/* goal bar: during a challenge it tracks the next medal mark instead of the starter goals (which wait for the standard run) */
+const _gHead495=gHead;gHead=function(){if(!(S&&S.ch)) return _gHead495();const C=S.ch,d=chDef495(C.id),gt=$('#gTxt'),ge=$('#gEta'),gb=$('#gBar'),gl=$('#goal');if(!gt||!d) return;
+ const M=CHM495[d.m],k=C.med|0,v=M.time?C.at:(C.best==null?0:C.best);setT($('#gCh'),'MEDAL');
+ if(k>=3) {setT(gt,`Gold won in ${d.n}. Best ${M.fmt(v)}`);gb.style.width='100%';}
+ else{setT(gt,`${MED495[k+1].n}: ${M.sh.toLowerCase()} ${chGoalTxt495(d,k)}${M.time?'':' (best '+M.fmt(v)+')'}`);
+  const lo=k?chFrac495(d,d.g[k-1]):0,hi=chFrac495(d,d.g[k]),f=M.time?clamp((S.t-C.t0)/d.g[k],0,1):clamp((chFrac495(d,v)-lo)/Math.max(1e-9,hi-lo),0,1);gb.style.width=(f*100).toFixed(1)+'%';}
+ if(ge) setT(ge,mmss495(chLeft495()));if(gl){gl.classList.remove('rdy');const al=`Challenge ${d.n}: ${mmss495(chLeft495())} left. Tap for details`;if(gl.getAttribute('aria-label')!==al) gl.setAttribute('aria-label',al);}};
+/* swapping runs: reset the animated cash, clear effects, and show the result window when the clock or goal ends it */
+const _chStart495u=chStart495;chStart495=function(id){const r=_chStart495u(id);if(r){try{fxClear();}catch(e){}shownCash=S.cash;}return r;};
+const _chEnd495u=chEnd495;chEnd495=function(why){const r=_chEnd495u(why);if(r){try{fxClear();}catch(e){}shownCash=S.cash;try{render(true);}catch(e){}if(why!=='quit'&&!modalOpen) setTimeout(()=>{try{if(S.chRes&&!modalOpen) chResModal495();}catch(e){}},60);}return r;};
+/* ---- actions ---- */
+const V495_ACT={
+ ch495l(){if(modalOpen) closeModal();chListModal495();},ch495b(id){if(modalOpen) closeModal();chBrief495(id);},
+ ch495go(id){if(modalOpen) closeModal();if(chStart495(id)){setTab('hq');render(true);}},
+ ch495i(){if(modalOpen) closeModal();chInfo495();},ch495x(){if(modalOpen) closeModal();chQuit495();},
+ ch495r(){chResModal495();},ch495ok(){if(modalOpen) closeModal();S.chRes=null;render(true);},
+ ch495t(id){S.chTitle=id==='none'?'':(chDef495(id)&&chMedOf495(id)>=2?id:S.chTitle);toast(S.chTitle?`🥇 Title: ${chTitleTxt495()}. It signs your next shareholder letters.`:'🥇 No title on your letters.');render(true);},
+ ch495e(e){S.emblem=e==='none'?'':(chEmbs495().includes(e)?e:S.emblem);render(true);},
+ gloss495(k){glossary(k);}};
+['ch495l','ch495b','ch495i','ch495x','ch495r','ch495ok','ch495t','ch495e','gloss495'].forEach(k=>PZ_OK.add(k));
+/* ---- help: topics, mini-tours, glossary ---- */
+T48_TOP.hq.splice(1,0,
+ {id:'ch',t:'🥇 Challenge',sel:()=>q48('#hqCh'),b:()=>{const d=S.ch&&chDef495(S.ch.id);return d?`You are playing <b>${d.ico} ${d.n}</b>. Beat the ${CHM495[d.m].sh.toLowerCase()} marks for bronze, silver and gold before the clock runs out (${mmss495(chLeft495())} left). End challenge brings your standard run back exactly as you left it.`:'';}},
+ {id:'chr',t:'🥇 Challenge result',sel:()=>q48('#hqChRes'),b:()=>`Your last challenge is settled and your standard run is back. See result shows the medal and anything it unlocked.`});
+T48_TOP.legacy.splice(1,0,{id:'chs',t:'🥇 Challenges',sel:()=>q48('#lgCh'),b:()=>chOpen495()?`Ten hand-built scenarios, each with its own rules, a clock and bronze, silver and gold marks. You hold <b>${chCount495().b}</b> medal${chCount495().b===1?'':'s'}. Your standard run is saved while you play one.`:'Challenges unlock after your first Exit: ten scenarios with medals and cosmetic rewards.'});
+T48_TOP.legacy.push({id:'med',t:'🏆 Medal room',sel:()=>q48('#lgMed'),b:()=>`Your medals, titles and emblems. Silver gives a title for your shareholder letters, gold an emblem by your company name; ${CH495_GOLD_THEME} golds open the Medal Room theme (${chGolds495()} so far).`});
+M48.push(
+ {id:'ch',t:'Challenge runs',steps:[{t:'🥇 Your challenge is on',sel:()=>q48('#hqCh'),b:()=>`The clock (active play only), your best score and the medal marks. Rules for this scenario are listed here. End challenge any time: you keep medals already won.`},
+  {t:'🥇 Always in view',sel:()=>q48('#hCh495'),b:()=>`The header shows the clock and your medal so far. Tap it for the details.`}]},
+ {id:'chs',t:'Challenges',steps:[{t:'🥇 Challenges unlocked',sel:()=>chOpen495()?q48('#lgCh'):null,b:()=>`Ten scenarios, from a bankrupt conglomerate to a flash crash. Each has bronze, silver and gold marks and cosmetic rewards. Your standard run is saved while you play.`}]});
+GLOSS.push(['challenge','Challenge runs',`Ten hand-built scenarios (after your first Exit): ${CH495.map(d=>d.n).join(', ')}. Each has its own rules, a clock that runs only while you play, and one score with bronze, silver and gold marks. Starting one saves your standard run; ending it (clock, goal or End challenge) brings that run back exactly as it was. Challenges play on a level field: no perks, stars, achievement bonus, playbook, rule card, Exit, achievements, starter goals, letters or offline earnings.`],
+ ['medals','Medals and rewards',`Your best medal per challenge is kept on this device and shown in Legacy · Medal room. Silver unlocks a title that signs your shareholder letters, gold an emblem to wear by your company name, and ${CH495_GOLD_THEME} golds the Medal Room HQ theme. Rewards are cosmetic only and never for sale.`]);
+const v495_init0=init;init=function(){Object.assign(ACT,V495_ACT);chStoreWrap495();const gn0=ACT.gnext;if(gn0) ACT.gnext=function(){if(S&&S.ch){chInfo495();return;}return gn0.apply(this,arguments);};v495_init0();
+ const nm=document.getElementById('hRm49')||document.getElementById('hName');if(nm&&!document.getElementById('hCh495')) nm.insertAdjacentHTML('afterend','<button type="button" id="hCh495" class="hrm49 hch495" data-a="ch495i" hidden></button>');
+ const ex0=FX.exit;FX.exit=function(st,x){ex0(st,x);queueMicrotask(()=>{try{const mb=document.getElementById('mbox'),c=mb&&document.getElementById('modal').classList.contains('show')&&/Exit complete/.test(mb.textContent)?mb.querySelector('[data-a=mclose]'):null;
+   if(c&&chOpen495()&&!mb.querySelector('[data-a=ch495l]')) c.insertAdjacentHTML('beforebegin',emo(`<button class="btn sec" style="width:100%;margin-bottom:6px" data-a="ch495l">🥇 Try a challenge (your new run waits)</button>`));}catch(e){}});};
+ const _r495=render;render=function(f){_r495(f);try{chChip495();}catch(e){}};chChip495();setInterval(()=>{try{chChip495();}catch(e){}},500);
+ Object.assign(window.HOLDING,{CH495,CHM495,MED495,CH495_GOLD_THEME,chDef495,chOn495,chOpen495,chMedOf495,chGolds495,chCount495,chTitles495,chEmbs495,chTitleTxt495,chLeft495,chMetric495,chTier495,chStart495,chEnd495,chStep495,chAward495,
+  chFix495,chMedFix495,chBestFix495,chResFix495,chLegacyHTML495,chHQHTML495,chResHTML495,chBrief495,chListModal495,chInfo495,chQuit495,chResModal495,chMedalRoomHTML495,chChip495,chFrac495,
+  achMult,checkAch,checkGoals,canExit,buyPerk,endQuarter,ltrBuild49,offlineCalc,canBorrow,moraleTarget,found,tender,exitHint,rmPickHTML49,calmNet,THEMES,EMBLEMS,AG_MS,EMO,fixTheme:()=>Store.fixTheme(),gHead});};
 /* ---------------- STORE ----------------
  Entitlements come ONLY from the platform receipt record (PLAT_KEY, written by the store layer / native wrapper).
  S.owned is just a cache of it. In this web build the store runs in PREVIEW mode: nothing can be bought.
@@ -7988,7 +8315,7 @@ window.HOLDING={P485,p485Apply,sat485,tierAt485,ucAt485,unitCost,maxAfford,MAXU,
  ctGen,ctVal,ctBest,ctAccept,ctBreak,ctActive,ctLockK,ctPending,ctStep,ctFix,ctOn,CT:{CT_LEN,CT_SQ,CT_AUD,CT_SENT,CT_BRK},
  checkWeek,wkGen,wkIdx,wkDaysLeft,wkLabel,wkEvent,wkSettle,wkRescale,wkReward,wkProg,wkText,wkUnlockOK,wkFix,wkLeft,tpBest,tpFinder,agPace,agTpHint,dayNum,
 };
-/* ===== SESSION_LOG_INJECT begin (v49 hosted copy; not written back to live holding.html) ===== */
+/* ===== SESSION_LOG_INJECT begin (v49.5 hosted copy; not written back to live holding.html) ===== */
 /* Build switch for the live session logger (testing). Set SESSION_LOG_BUILD to false, or drop src/c37_slogflag.js, src/d49_sesslog.js,
    src/d50_sesslog_holding.js and src/a38_sesslog.css from build.sh, to strip it from store builds. */
 const SESSION_LOG_BUILD=true;
