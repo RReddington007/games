@@ -8621,7 +8621,7 @@ if(SESSION_LOG_BUILD){
     else if(v==='cl'){SLOG.copyLog().then(ok=>toast(ok?'📋 Session log copied':'Copy failed: use Download session log'));}if(curTab==='legacy') render(true);};
    const def=(typeof SESSION_LOG_CHANNEL==='string'&&SESSION_LOG_CHANNEL)?SESSION_LOG_CHANNEL:'';
    const SL=(typeof BCSessionLog!=='undefined'&&BCSessionLog)||(typeof SessionLog!=='undefined'&&SessionLog&&SessionLog.create&&SessionLog)||(window.BCSessionLog||window.SessionLog);
-   SLOG=SL.create({app:'holding',version:'v49',channel:SL.channelFromUrl()||def,injectCss:false,screen:()=>curTab+(modalOpen?'*':''),state:slogState,scrub:slogScrub,
+   SLOG=SL.create({app:'holding',version:'v50',channel:SL.channelFromUrl()||def,injectCss:false,screen:()=>curTab+(modalOpen?'*':''),state:slogState,scrub:slogScrub,
     allowed:()=>!(S&&S.set&&S.set.privacy&&S.set.privacy.age==='minor'),
     onChange:()=>{if(curTab==='legacy') try{render(true);}catch(e){}},
     label:t=>{const a=t.dataset&&t.dataset.a;if(a){const x=t.getAttribute('aria-label')||t.textContent||'';return '['+a.slice(0,32)+'] '+x;}return null;}});
